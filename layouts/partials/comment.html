@@ -8,12 +8,25 @@
         {{- /* Disqus Comment System */ -}}
         {{- $disqus := $comment.disqus | default dict -}}
         {{- if $disqus.enable -}}
+            <div id="disqus-alert" style="border: 2px dashed #FF475C; border-radius: 15px; padding: 10px">
+                <h2 style="text-align: center;">🍪 I use Disqus for comments</h2>
+                <p style="text-align: center;">Because Disqus requires cookies this site doesn't automatically load comments.</p>
+                <p style="text-align: center; text-decoration:underline;color: #2d96bd">
+                <a href="#comments" onclick=loadDisqus()>I don't mind about cookies - Show me the comments from now on (and set a cookie to remember my preference)</a></p>
+            </div>
             <div id="disqus_thread" class="comment"></div>
-            {{- $source := printf "https://%v.disqus.com/embed.js" $disqus.shortname -}}
-            {{- dict "Source" $source "Defer" true | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
-            <noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
-            </noscript>
+            <script>
+                function loadDisqus() {
+                    document.cookie = "disqus=optedin; expires=Thu, 18 Dec 2022 12:00:00 UTC";
+                    var elm = document.getElementById("disqus-alert");
+                    elm.style.display = "none";
+                    let disqusJs = document.createElement("script");
+                    let disqusUri = "https://{{- $disqus.shortname -}}.disqus.com/embed.js";
+                    disqusJs.setAttribute("src", disqusUri);
+                    document.body.appendChild(disqusJs);
+                }
+                if (document.cookie.indexOf("disqus=optedin") >= 0) { loadDisqus(); }
+            </script>
         {{- end -}}
 
         {{- /* Gitalk Comment System */ -}}
