@@ -1,6 +1,12 @@
 {{- $analytics := .Scratch.Get "analytics" | default dict -}}
 
 {{- if $analytics.enable -}}
+
+    {{- /* GoatCounter */ -}}
+    {{- with $analytics.goat.id -}}
+        <script data-goatcounter="https://{{ $analytics.goat.id }}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    {{- end -}}
+
     {{- /* Google Analytics */ -}}
     {{- with $analytics.google.id -}}
         <script type="text/javascript">
