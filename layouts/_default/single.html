@@ -19,6 +19,8 @@
         </div>
 
         {{- /* Comment */ -}}
-        {{- partial "comment.html" . -}}
+        {{ if not .Params.noComment }}
+            {{- partial "comment.html" . -}}
+        {{ end }}
     </div>
 {{- end -}}
