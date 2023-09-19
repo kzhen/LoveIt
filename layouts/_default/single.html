@@ -4,9 +4,11 @@
     {{- $params := .Scratch.Get "params" -}}
     <div class="page single special">
         {{- /* Title */ -}}
-        <h1 class="single-title animated pulse faster">
-            {{- .Title -}}
-        </h1>
+        {{ if not .Params.hideTitle }}
+            <h1 class="single-title animated pulse faster">
+                {{- .Title -}}
+            </h1>
+        {{ end }}
 
         {{- /* Subtitle */ -}}
         {{- with $params.subtitle -}}
